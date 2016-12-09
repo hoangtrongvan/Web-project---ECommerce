@@ -15,6 +15,7 @@ public class Products {
     private int amount;
     private String img_url;
     private String productID;
+    private String aaa;
 
     /**
      * @return the name
