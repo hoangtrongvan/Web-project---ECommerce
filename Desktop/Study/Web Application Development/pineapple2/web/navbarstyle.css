@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    
+    padding : 0;
+    font-family: 'Open Sans', sans-serif;
+    
+    
+}
+
+.nav{
+    margin-top: 0;
+    background-color: #151515;
+    color: #c1c1c1;
+    list-style: none;
+    padding : 20px 0 20px 0;
+    font-size: 10pt;
+    margin-bottom: 0;
+    text-align: left;
+    
+}
+
+
+.nav li{
+   
+    display: inline-block;
+    padding : 0 15px 0 15px;
+    
+}
+
+.logo{
+    float: left;
+}
+.logo img{
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.nav li a {
+    text-decoration: none;
+    color : #c1c1c1;
+}
+.nav li a:hover{
+    color : #ffffff;
+}
+.modal1 {
+    /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /* Fallback color */
+    /* Black w/ opacity */
+     background: rgba(0, 0,1,0.8);
+    visibility: hidden;
+    opacity: 0;
+    
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    margin-top: 150px;
+    width: 70%;
+    cursor:text;
+    
+   
+  
+}
+
+
+
+.close1 {
+    padding: 20px;
+     top: 0;
+    color: #c1c1c1;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close1:hover,
+.close1:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.modal-content input[type=text] {
+    width: 100%;
+    
+    height: 80px;
+    outline : none;
+    font-size: 20pt;
+    color: #ffffff;
+    background-color: #2C2C2C;
+    border: none;
+    padding: 8px 20px 8px 20px;
+    
+}
+a.special{
+    padding: 8px;
+    background-color: #1C7FFF;
+    border: 1px solid #1C7FFF;
+    
+    border-radius: 4px;
+}
+
+a.special:hover{
+    background-color: #0A74FE;
+    
+}
+
+.cart {
+  float: right;
+}   
+.cart img{
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
