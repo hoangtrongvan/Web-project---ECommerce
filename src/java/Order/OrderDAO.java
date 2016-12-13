@@ -41,7 +41,7 @@ public class OrderDAO {
             while(rs.next()){
             
                 
-                    order = new Order(rs.getString("ProductID"),rs.getString("Date"),rs.getString("Time"),Integer.parseInt(rs.getString("Quantity")),rs.getString("Customer"),rs.getInt("OrderID"));
+                    order = new Order(rs.getString("ProductID"),rs.getString("Date"),rs.getString("Time"),Integer.parseInt(rs.getString("Quantity")),rs.getString("Customer"),rs.getInt("OrderID"), rs.getString("ProductName"));
                     allOrders.add(order);
                     
                     

@@ -1,4 +1,7 @@
 
+<%@page import="Category.Category"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Category.CategoryDAO"%>
 <%@page import="Customer.User"%>
 <%@page import="Customer.UserDAO"%>
 <style>
@@ -57,7 +60,7 @@
 .modal1 {
     /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 9999; /* Sit on top */
     
     left: 0;
     top: 0;
@@ -246,11 +249,19 @@
      
     <ul class="nav">
        
+        <% 
+                            CategoryDAO categoryDAO = new CategoryDAO();
+                            ArrayList<Category> allcategories = categoryDAO.getAllCategories();
+                            
+                           
+
+                            for(Category category: allcategories){
+                                String categoryName = category.getCategory();
+                        %> 
         
+        <li><a href="/Pineapple/Product/Category.jsp?categoryName=<%=categoryName%>"><%=categoryName%></a></li>
         
-        <li><a href="/Pineapple/Product/Pac.jsp">Pac</a></li>
-        <li><a href="#">pPad</a></li>
-        <li><a href="#">pPhone</a></li>
+        <% }%>
         <li  id="myBtn1"><a href="#">Search</a></li>
         <%if(uEmail!=null){ %>
         

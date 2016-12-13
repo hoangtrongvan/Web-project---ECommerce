@@ -5,7 +5,13 @@
  */
 package Products;
 
+import Color.Color;
+import ColorProduct.ColorProdDAO;
+import ColorProduct.ColorProduct;
 import Customer.User;
+import Customer.UserDAO;
+import ModelProduct.ModelProdDAO;
+import ModelProduct.ModelProduct;
 import com.javadb.lib.MySqlConnectionManager;
 import com.nenjamin.ejb.MailSenderBean;
 import java.io.IOException;
@@ -24,7 +30,10 @@ import java.lang.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -92,13 +101,25 @@ public class productServlet extends HttpServlet {
          
          /* Signup Action */
         if (action.equals("addtoCart")){ 
-            String product_name = request.getParameter("product_name");
+            String productID = request.getParameter("productID");
             String color = request.getParameter("color");
-            String processor = request.getParameter("Processor");
-            String memory = request.getParameter("Memory");
+            String modelID = request.getParameter("Model");
+            ProductDAO productDAO = new ProductDAO();
+            ModelProdDAO modelDAO = new ModelProdDAO();
+            ModelProduct modelProd = new ModelProduct();
+            Products product = new Products();
+            ColorProduct colorProd = new ColorProduct();
+            ColorProdDAO colorDAO = new ColorProdDAO();
+            try {
+                colorProd = colorDAO.getColorProductByProdID(color,productID);
+                product = productDAO.getOneProduct(productID) ;
+                modelProd =   modelDAO.getModelByID(Integer.parseInt(modelID));
+            } catch (SQLException ex) {
+                Logger.getLogger(productServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String uEmail = null;
             String img_url = null;
-            String productID = null;
+            
            
      
             
@@ -111,24 +132,14 @@ public class productServlet extends HttpServlet {
                 if(cookie.getName().equals("uEmail")) uEmail = cookie.getValue();
             }
             }
-            String product_fullName = product_name + " - " + color + " - " + processor + " - " + memory;
+            String product_fullName = product.getName() + " - " + color + " - Model" + modelProd.getModelID();
             
-            /* Create MySql Connection */
-                 MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
-                "localhost", "3306", "pineapple", "root", "240596150995");
-        
-                 sqlConnectionManager.openConnection();
-        
-                 String sqlStatement ="SELECT * FROM products";
-                 ResultSet rs = sqlConnectionManager.ExecuteQuery(sqlStatement);
-         try {
-            while(rs.next()){
-             if (rs.getString("Name").equals(product_name) && rs.getString("Color").equals(color)) {
-                    price = Double.parseDouble(rs.getString("Price"));
-                    img_url = rs.getString("img_url");
-                    productID = rs.getString("ProductID");
-              }
-            }
+           
+         
+                    price = modelProd.getPrice() ;
+                    img_url = colorProd.getColorProd_url() ;
+                    String description = modelProd.getGeneralInfo();
+            
             
                      
                      /* Checking the cart whether it's exist or not */
@@ -138,8 +149,8 @@ public class productServlet extends HttpServlet {
                          /* If cart is not exist --> create new cart and add product to it */
                          ArrayList<Products> cart = new ArrayList();
                          /* Create Products Object and set information inside object */
-                         Products product = new Products(product_fullName, price, 1, img_url,productID);
-                         cart.add(product);
+                         Products productinCart = new Products(product_fullName, price, 1, img_url,productID,description);
+                         cart.add(productinCart);
                          session.setAttribute(uEmail,cart);
                          session.setMaxInactiveInterval(24*60*60);
                          
@@ -147,44 +158,21 @@ public class productServlet extends HttpServlet {
                      else {
                          /* If cart is exist --> keep adding product to cart */
                          int overlap = 0;
-                         for(Products product : cart2){
-                             if (product.getName().equals(product_fullName)){
-                                 int newAmount = product.getAmount() + 1;
-                                 product.setAmount(newAmount);
+                         for(Products productinCart : cart2){
+                             if (productinCart.getName().equals(product_fullName)){
+                                 int newAmount = productinCart.getAmount() + 1;
+                                 productinCart.setAmount(newAmount);
                                  overlap = 1;
                              }
                                  
                          }
                          if (overlap == 0){
-                                Products product = new Products(product_fullName, price, 1, img_url,productID);
-                                cart2.add(product);
+                                Products productinCart = new Products(product_fullName, price, 1, img_url,productID,description);
+                                cart2.add(productinCart);
                          }
                          session.setAttribute(uEmail, cart2 );
                      }        
-            /*String sql2 = "INSERT INTO cart (CustomerEmail, Product, Amount, Price, img_url) " +
-                   "VALUES (?,?,?,?,?)";
-                
-                
-        
-                    PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sql2);
-                          preparedStmt.setString (1, uEmail);
-                          preparedStmt.setString (2, product_fullName);
-                          preparedStmt.setString (3, "1");
-                          preparedStmt.setString (4, Double.toString(price));
-                          preparedStmt.setString (5, img_url);
-                       
-                         
-                          
-                          
-                        
-                          preparedStmt.execute();
-           sqlConnectionManager.closeConnection();
-                     */
-           
-         }
-                 catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+       
         
                      
 
@@ -298,8 +286,8 @@ public class productServlet extends HttpServlet {
                     "</tr>\n";
             
              /* Insert Order */
-            String sql2 = "INSERT INTO OrderPineapple (Customer, ProductID, Quantity, Date, Time)" +
-                   "VALUES (?,?,?,?,?)";
+            String sql2 = "INSERT INTO OrderPineapple (Customer, ProductID, Quantity, Date, Time, ProductName)" +
+                   "VALUES (?,?,?,?,?,?)";
                 
                 
         
@@ -315,6 +303,7 @@ public class productServlet extends HttpServlet {
                           preparedStmt.setInt(3, product.getAmount());
                           preparedStmt.setString (4, dateFormat);
                           preparedStmt.setString (5, timeFormat);
+                          preparedStmt.setString (6, product.getName());
                          
                      
                       
@@ -361,6 +350,82 @@ public class productServlet extends HttpServlet {
         }
        
          sqlConnectionManager.closeConnection();
+    }else if (action.equals("addnewProduct")){
+        String category = request.getParameter("Category");
+        final Part fileAva = request.getPart("avaProd");
+        final Part fileimg_desc1 = request.getPart("img_desc1");
+        final Part fileimg_desc2 = request.getPart("img_desc2");
+        final Part fileLarge_img = request.getPart("large_img");
+        final Part fileSmall_icon = request.getPart("small_icon");
+        String caption = request.getParameter("caption"); 
+        String brief_desc = request.getParameter("briefdescription");
+        String desc1 = request.getParameter("description1");
+        String desc2 = request.getParameter("description2");
+        final String path = "E:\\Web\\Github\\Web-project---ECommerce\\web\\ProductsContainer";
+        String prodID = request.getParameter("prodID");
+        String prodName = request.getParameter("prodName");
+        ProductDAO productDAO = new ProductDAO();
+        String ava_url = productDAO.addIMG(prodID + "Ava", fileAva, path);
+        String img_desc1 = productDAO.addIMG(prodID + "desc1", fileimg_desc1, path);
+        String img_desc2 = productDAO.addIMG(prodID + "desc2", fileimg_desc2, path);
+        String large_img = productDAO.addIMG(prodID + "largeIMG", fileLarge_img, path);
+        String Small_icon = productDAO.addIMG(prodID + "smallIcon", fileSmall_icon, path);
+        Products product = new Products(prodID, prodName, ava_url, brief_desc, desc1, desc2, img_desc1, img_desc2, large_img, category, Small_icon, caption);
+        productDAO.addProduct(product);
+        String[] color = request.getParameterValues("color");
+        String modelAmount = request.getParameter("modelAmount");
+        ArrayList<ColorProduct> chosenColors = new ArrayList<>();
+        ColorProduct colorProduct = new ColorProduct();
+            for (String color1 : color) {
+                colorProduct = new ColorProduct(prodID, color1);
+                chosenColors.add(colorProduct);
+            }
+        session.setAttribute("chosenColors", chosenColors);
+        session.setMaxInactiveInterval(2*60*60);
+        session.setAttribute("color", color);
+      
+        
+           
+        session.setAttribute("modelAmount", modelAmount);
+        response.sendRedirect("/Pineapple/Manager/AddInfoProd.jsp");
+        
+    }else if (action.equals("addProduct")){
+        /* Add color for product */
+        ArrayList<ColorProduct> chosenColors = (ArrayList<ColorProduct>)session.getAttribute("chosenColors");
+        session.removeAttribute("chosenColors");
+        final String path = "E:\\Web\\Github\\Web-project---ECommerce\\web\\colorProducts";
+        ColorProdDAO colorProdDAO = new ColorProdDAO();
+        for(ColorProduct colorProd : chosenColors){
+            
+            final Part filePart = request.getPart(colorProd.getColor());
+            
+            colorProdDAO.addColorProd(colorProd, filePart, path);
+            
+            
+        }
+        /* Add model for product */
+        
+        
+        String prodID = request.getParameter("prodID");
+        String modelAmount = (String)session.getAttribute("modelAmount");
+        session.removeAttribute("modelAmount");
+        int amount = Integer.parseInt(modelAmount);
+        ModelProdDAO modelprodDAO = new ModelProdDAO();
+        ModelProduct modelProd = new ModelProduct();
+        for (int i=0;i<amount;i++){
+        String index = Integer.toString(i);
+        
+        String generalInformation = request.getParameter("generalInformation" + index);
+        String price = request.getParameter("price" + index);
+            modelProd = new ModelProduct(prodID, generalInformation, Float.valueOf(price));
+            modelprodDAO.addModelProd(modelProd);
+        }
+        response.sendRedirect("/Pineapple/Manager/Product-List.jsp");
+    }else if (action.equals("removeProduct")){
+        String prodID = request.getParameter("remove"); 
+        ProductDAO productDAO = new ProductDAO();
+        productDAO.removeProduct(prodID);
+        response.sendRedirect("/Pineapple/Manager/Product-List.jsp");
     }
     }
     private void gotoPage(String address, HttpServletRequest request, HttpServletResponse response)

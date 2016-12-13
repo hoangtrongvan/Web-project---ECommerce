@@ -4,6 +4,7 @@
     Author     : nhatduthan2405
 --%>
 
+<%@page import="Products.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Products.Products"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -130,6 +131,7 @@
             
             .table-row{
                 display: block;
+                border-bottom: 1px solid #d5d5d5;
                  
             }
             .product-price,.quantity-select,.sub-total{
@@ -356,7 +358,14 @@
                             </ul>
                            <div class="clr"></div>
                         </div>
-                       
+                       <div class="Description-Prod">
+                                     <%String description = product.getDescription();
+                                     ProductDAO productDAO = new ProductDAO();
+                                     String[] generalInfoArray = productDAO.displayGeneralInfo(description);
+                                     for(String eachInfo : generalInfoArray )
+                                     out.print(eachInfo + "<br><br>");
+                                     %>
+                                 </div>
                                  
                             
                    

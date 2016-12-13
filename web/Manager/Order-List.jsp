@@ -102,6 +102,7 @@ th {
   <tr>
     <th>Customer</th>
     <th>ProductID</th>
+    <th>Product Name</th>
     <th>Date</th>
     <th>Time</th>
     <th>Quantity</th>
@@ -118,11 +119,13 @@ th {
     String productID = order.getProduct_id();
     String date = order.getDate();
     String time = order.getTime();
+    String productName = order.getProduct_name();
     int quantity = order.getQuantity(); 
     int orderID = order.getOrderID(); %>
     <tr>
         <td><%=customer%></td>
         <td><%=productID%></td>
+        <td><%=productName%></td>
         <td><%=date%></td>
         <td><%=time%></td>
         

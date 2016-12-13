@@ -105,7 +105,7 @@ th {
    
   <table>
   <tr>
-    <th>Customer</th>
+    <th>User</th>
     <th>Date of Birth</th>
     <th>Phone Number</th>
     <th>Address</th>

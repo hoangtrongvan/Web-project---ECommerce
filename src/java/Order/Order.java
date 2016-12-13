@@ -16,14 +16,16 @@ public class Order {
     private int quantity;
     private String customer;
     private int orderID;
+    private String product_name;
 
-    public Order(String product_id, String date, String time, int quantity, String customer, int orderID){
+    public Order(String product_id, String date, String time, int quantity, String customer, int orderID, String product_name){
         this.product_id = product_id;
         this.date = date;
         this.time = time;
         this.customer = customer;
         this.quantity = quantity;
         this.orderID = orderID;
+        this.product_name = product_name;
     }
     public Order(){
         
@@ -110,6 +112,20 @@ public class Order {
      */
     public void setOrderID(int orderID) {
         this.orderID = orderID;
+    }
+
+    /**
+     * @return the product_name
+     */
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    /**
+     * @param product_name the product_name to set
+     */
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
     }
     
     

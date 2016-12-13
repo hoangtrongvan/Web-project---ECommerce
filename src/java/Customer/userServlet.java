@@ -172,7 +172,7 @@ public class userServlet extends HttpServlet {
                 }
         }else if(action.equals("changeAvatar")){
             
-            final String path = "E:\\Web\\Web Project\\Pineapple\\web\\avatars";
+            final String path = "E:\\Web\\Github\\Web-project---ECommerce\\web\\avatars";
             final Part filePart = request.getPart("file");
             
             User loginUser = (User)session.getAttribute("loginUser");

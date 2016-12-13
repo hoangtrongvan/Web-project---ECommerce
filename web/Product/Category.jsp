@@ -4,11 +4,15 @@
     Author     : nhatduthan2405
 --%>
 
+<%@page import="Products.ProductDAO"%>
+<%@page import="Products.Products"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>pMac</title>
+        <title>Pac</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
@@ -160,93 +164,79 @@ body {
     background-image: url('icon/macbook_large.png');
     background-repeat: no-repeat;
 }
-
+.hidden{
+    display: none;
+}
   </style>
         
     </head>
     <body>
+        <%  
+            String categoryName = request.getParameter("categoryName");
+           
+            ArrayList<Products> allProductsFromCategory = new ArrayList(); 
+            ProductDAO productDAO = new ProductDAO();
+            allProductsFromCategory = productDAO.getAllProductsFromCategory(categoryName);
         
+        %>
      <jsp:include page="../HeaderandFooter/navbar.jsp" />
          <div class="chapterNavcontent" >
      
     <ul style="padding : 50px 0 50px 0; background-color: #F7F7F7;text-align: center;" class="chapterNav">
        
         
+        <% for(Products product : allProductsFromCategory){
+                String smallIcon = product.getSmall_icon_url();
+                String prodName = product.getName();
         
-                <li><a href="../Product/Pacbook-Pro.jsp" class="chapternav-link">
-                        <figure style ="width: 52px;height: 54px;background-size: 52px 54px;background-image: url('../icon/macbookair_large.png')" class="chapternav-icon"></figure>
-                        <span class="chapternav-lable">Pacbook</span>
+            
+        %>
+                <li><a href="/Pineapple/Product/IntroProduct.jsp?productID=<%=product.getProductID()%>" class="chapternav-link">
+                       
+                            
+                        <figure style ="width: 52px;height: 54px;background-size: 52px 54px;background-image: url('<%=smallIcon%>')" class="chapternav-icon"></figure>
+                        <span class="chapternav-lable"><%=prodName%></span>
             </a></li>
-          <li><a href="pMacBook-pro_page.jsp" class="chapternav-link">
-                        <figure style ="width: 52px;height: 54px;background-size: 52px 54px;background-image: url('../icon/macbookair_large.png')" class="chapternav-icon"></figure>
-                        <span class="chapternav-lable">Pacbook Air</span>
-            </a></li>
-              <li><a href="pMacBook-pro_page.jsp" class="chapternav-link">
-                        <figure style ="width: 58px;height: 54px;background-size: 58px 54px;background-image: url('../icon/macbookpro_large.png')" class="chapternav-icon"></figure>
-                        <span class="chapternav-lable">Pacbook Pro</span>
-                        
-            </a></li>
-             <li><a href="pMacBook-pro_page.jsp" class="chapternav-link">
-                        <figure style ="width: 48px;height: 54px;background-size: 48px 54px;background-image: url('../icon/imac_large.png')" class="chapternav-icon"></figure>
-                        <span class="chapternav-lable">Pac</span>
-            </a></li>
-       
+          
+        <%}%>
       
     </ul>
     
 
 </div>
+        <% for(Products product : allProductsFromCategory){
+                
+                String prodName = product.getName();
+                String large_IMG = product.getLarge_img_url();
+                String caption = product.getCaption();
+        
+            
+        %>
         <div class="item">
             <div class="NameandPrice">
                 <div class="itemName">
-                    <span style="font-family: 'Oswald', sans-serif;font-size: 24pt;">Pacbook Pro</span><br>
+                    <span style="font-family: 'Oswald', sans-serif;font-size: 24pt;"><%=prodName%></span><br>
                     <hr class="style-one">
                     <br><br>
-                    <span style="font-family: 'Roboto Slab', serif;;font-size: 50pt;">A touch of genius.</span><br><br>
+                    <span style="font-family: 'Roboto Slab', serif;;font-size: 50pt;"><%=caption%></span><br><br>
                     
                 </div><br>
-                <div  style="text-align : center;"> 
-                <span class="card_price">$1,499.00</span>
-                </div>
+                
             </div>
             <div class="test">
             <div class="hoverTest">
                 <div class="content">
-                  <a href="../Product/Pacbook-Pro.jsp"><img style="width: 100px; height: 100px; " src="../icon/eyeicon.png"></a>
-                  <a href="../Product/buy-Pacbook-Pro.jsp"><img style="width: 100px; height: 100px; " src="../icon/carticon.png"></a>
+                  <a href="/Pineapple/Product/IntroProduct.jsp?productID=<%=product.getProductID()%>"><img style="width: 100px; height: 100px; " src="../icon/eyeicon.png"></a>
+                  <a href="/Pineapple/Product/BuyProduct.jsp?productID=<%=product.getProductID()%>"><img style="width: 100px; height: 100px; " src="../icon/carticon.png"></a>
                 </div>
             </div>
-            <img class="img_test" src="../images/macbookpro_large.png" >
+            <img class="img_test" src="<%=large_IMG%>" >
         </div>
             
             
         </div><br><br><br><br>
-        
-         <div class="item">
-            <div class="NameandPrice">
-                <div class="itemName">
-                    <span style="font-family: 'Oswald', sans-serif;font-size: 24pt;">Pac</span><br>
-                    <hr class="style-one">
-                    <br><br>
-                    <span style="font-family: 'Roboto Slab', serif;font-size: 50pt;">Retina. In colossal and ginormous.</span><br><br>
-                    
-                </div><br>
-                <div  style="text-align : center;"> 
-                <span class="card_price">$1,499.00</span>
-                </div>
-            </div>
-            <div class="test">
-            <div class="hoverTest">
-                <div class="content">
-                  <a href="#"><img style="width: 100px; height: 100px; " src="../icon/eyeicon.png"></a>
-                  <a href="#"><img style="width: 100px; height: 100px; " src="../icon/carticon.png"></a>
-                </div>
-            </div>
-            <img class="img_test" src="../images/imac_large.png">
-        </div>
-            
-            
-        </div><br><br><br><br>
+        <%}%>
+         
             <jsp:include page="../HeaderandFooter/footer.jsp" />
     </body>
 </html>

@@ -4,6 +4,7 @@
     Author     : nhatduthan2405
 --%>
 
+<%@page import="Products.ProductDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Products.Products"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -130,6 +131,7 @@
             
             .table-row{
                 display: block;
+                 border-bottom: 1px solid #d5d5d5;
                  
             }
             .product-price,.quantity-select,.sub-total{
@@ -225,6 +227,9 @@
     border-radius: 4px;
     padding: 15px 28px;
 }
+.removeandupdate{
+   
+}
            </style>
 
     </head>
@@ -302,13 +307,22 @@
                             </ul>
                            <div class="clr"></div>
                         </div>
-                       
-                                 <p >
+                                 
+                                 <p class="removeandupdate">
                                      <button type="submit"  value="<%=i%>"  name="update" class="removeItem" id="updateItemBtn"  form="updateForm<%=i%>">Update</button>
                         <form action="/Pineapple/productServlet?action=Remove" method="post">
                             <button type="submit" value="<%=i%>"  name="remove" class="removeItem" id="removeItemBtn<%=i%>" onclick="Remove<%=i%>()">Remove</button>
                         </form>
                                  </p>
+                                 <div class="Description-Prod">
+                                     <%String description = product.getDescription();
+                                     ProductDAO productDAO = new ProductDAO();
+                                     String[] generalInfoArray = productDAO.displayGeneralInfo(description);
+                                     for(String eachInfo : generalInfoArray )
+                                     out.print(eachInfo + "<br><br>");
+                                     %>
+                                 </div>
+                                 
                             
                    
                 </div>
