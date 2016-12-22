@@ -14,17 +14,59 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Add Product</title>
+        <style>
+            .inputText{
+                width: 654px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display : incline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+             .textarea{
+                
+                padding: 12px 20px;
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            .submit-button{
+  
+                width: 100px;
+                background-color: #1C7FFF;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border : none;
+                border-radius: 4px;
+                cursor : pointer;
+                    
+            }
+             .submit-button:hover, #myBtn:hover{
+                background-color: #0A74FE;
+            }
+            .submit-button:hover{
+                background-color: #0A74FE;
+            }
+            .title{
+    font-weight: bold;
+    font-size: 14pt;
+}
+.containerContent{
+    padding: 20px 40px 20px 40px;
+}
+        </style>
     </head>
     <body>
-         <h1 style="color:#767676">Add Product</h1>
-               
-                
-                <hr class="style-two">
+         <jsp:include page="../HeaderandFooter/navbar.jsp" /> 
+         <jsp:include page="../HeaderandFooter/horizon-nav.jsp" /> 
            
-               
+         <div class="containerContent">
                     <form class="form-signin" enctype="multipart/form-data" action="/Pineapple/productServlet?action=addnewProduct" method="post" id="addnewProduct" >
-                        <p>Category</p>
+                        <p class="title">Category</p>
                         <select name="Category">
                         <% 
                             CategoryDAO categoryDAO = new CategoryDAO();
@@ -39,25 +81,28 @@
                             <option value="<%=categoryName%>"><%=categoryName%></option>
                            
                         <%}%>
-                        </select><br>
-                        <p>Small Icon</p>
-                        <input type="file" name="small_icon" id="file"  accept='image/*' required/> <br>
-                        <p>Avatar of Product</p>
-                        <input type="file" name="avaProd" id="file"  accept='image/*' required/> <br>
-                        <p>Large Image</p>
-                        <input type="file" name="large_img" id="file"  accept='image/*' required/> <br>
+                        </select><br><br>
+                        <p class="title">Small Icon</p>
+                        <input type="file" name="small_icon" id="file"  accept='image/*' required/> <br><br>
+                        <p class="title">Avatar of Product</p>
+                        <input type="file" name="avaProd" id="file"  accept='image/*' required/> <br><br>
+                        <p class="title">Large Image</p>
+                        <input type="file" name="large_img" id="file"  accept='image/*' required/> <br><br>
                         
-                        <input style = "width: 657px;" class="inputText" type="text" placeholder="Product ID" name ="prodID" required><br>
-                        <input style = "width: 657px;" class="inputText" type="text" placeholder="Product Name" name ="prodName" required>
-                        <br>
-                        <input style = "width: 657px;" class="inputText" type="text" placeholder="Caption" name ="caption" required>
-                        <br>
-                        <textarea rows="4" cols="50" placeholder="Brief Description" name="briefdescription"></textarea><br>
-                        <textarea rows="4" cols="50" placeholder="Description 1" name="description1"></textarea><br>
-                        <input type="file" name="img_desc1" id="file"  accept='image/*' required/><br> 
-                        <textarea rows="4" cols="50" placeholder="Description 2" name="description2"></textarea><br>
-                        <input type="file" name="img_desc2" id="file"  accept='image/*' required/><br>
+                        <input  class="inputText" type="text" placeholder="Product ID" name ="prodID" required><br><br>
+                        <input class="inputText" type="text" placeholder="Product Name" name ="prodName" required>
+                        <br><br>
+                        <input class="inputText" type="text" placeholder="Caption" name ="caption" required>
+                        <br><br>
+                        <textarea class="textarea" rows="4" cols="85" placeholder="Brief Description" name="briefdescription"></textarea><br><br>
+                        <textarea class="textarea" rows="4" cols="85" placeholder="Description 1" name="description1"></textarea><br>
+                        <p class="title">Image for Description 1</p>
+                        <input type="file" name="img_desc1" id="file"  accept='image/*' required/><br><br>
+                        <textarea class="textarea" rows="4" cols="85" placeholder="Description 2" name="description2"></textarea><br>
+                        <p class="title">Image for Description 2</p>
+                        <input type="file" name="img_desc2" id="file"  accept='image/*' required/><br><br>
                        
+                        <p class="title">Color of Product</p>
                         <% 
                             ColorDAO colorDAO = new ColorDAO();
                             ArrayList<Color> allColors = colorDAO.getallColors();
@@ -66,7 +111,7 @@
 
                             for(Color color : allColors){
                         %>        
-                        <input type="checkbox" name="color" value="<%=color.getName()%>"><img src="<%=color.getColor_img()%>"><%=color.getName()%><br>
+                        <input type="checkbox" name="color" value="<%=color.getName()%>"><img src="<%=color.getColor_img()%>"><%=color.getName()%><br><br><br>
                        
                         
                         
@@ -74,8 +119,8 @@
                             
          
                             
-                            
-                            <input  type="number" name="modelAmount" placeholder="Amount of Model" min="1" max="5">
+                        <br><br>
+                            <input  class="inputText" type="number" name="modelAmount" placeholder="Amount of Model" min="1" max="5">
                             
                            
                       </form>  
@@ -87,8 +132,12 @@
                 
             
             
-                
+                        <br><br>
                  <input class="submit-button" type="submit" value="Submit" form="addnewProduct">
-                 
+         </div>
+       <script>
+            var active = document.getElementById("addProd");
+            active.className += " active";
+       </script>          
     </body>
 </html>

@@ -220,6 +220,16 @@ public class userServlet extends HttpServlet {
             
 
         }
+        else if(action.equals("subcribe")){
+            String subEmail = request.getParameter("subEmail");
+            UserDAO userDAO = new UserDAO();
+            userDAO.insertSubcriber(subEmail);
+            PrintWriter out = response.getWriter();
+            out.print("Thanks you for subcribing!");
+            
+            
+
+        }
     }
 
     private void doSIGNOUT(HttpSession session,HttpServletRequest request,HttpServletResponse response)
@@ -381,7 +391,7 @@ public class userServlet extends HttpServlet {
                  sqlConnectionManager.closeConnection();
                  
                 
-                 response.sendRedirect("/Pineapple/webpages/index.jsp");
+                 response.sendRedirect("/Pineapple/User/login.jsp");
                 }
         
         }catch (SQLException ex) {

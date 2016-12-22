@@ -7,10 +7,15 @@
 <%@page import="Products.Products"%>
 <%@page import="Products.ProductDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% String prodID = request.getParameter("productID"); 
+           
+           ProductDAO productDAO = new ProductDAO();
+           Products product = productDAO.getOneProduct(prodID);
+        %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title><%=product.getName() + " - Pineapple" %></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
            <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
@@ -116,11 +121,7 @@
   </style>
     </head>
     <body>
-        <% String prodID = request.getParameter("productID"); 
-           
-           ProductDAO productDAO = new ProductDAO();
-           Products product = productDAO.getOneProduct(prodID);
-        %>
+        
          
         <jsp:include page="../HeaderandFooter/navbar.jsp" />
             <ul class="sub-nav-buy" id="wrap">

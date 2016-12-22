@@ -214,6 +214,7 @@ border: 1px solid #ccc;
         </style>
     </head>
     <body>
+          
         <jsp:include page="../HeaderandFooter/navbar.jsp" />
         <div class="login">
         <div class="login-content">

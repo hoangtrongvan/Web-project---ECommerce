@@ -32,11 +32,11 @@ public class MySqlConnectionManager {
         return this.connection;
     }
     public MySqlConnectionManager(String ip, String port, String database, String userName, String password) {
-        this.ip = ip;
-        this.port = port;
-        this.database = database;
-        this.userName = userName;
-        this.password = password;
+        this.ip = "localhost";
+        this.port = "3306";
+        this.database = "pineapple";
+        this.userName = "root";
+        this.password = "240596150995";
 
         connectionString = "jdbc:mysql://" + ip + ":" + port + "/" + database + "?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false";
 

@@ -17,8 +17,10 @@ public class Order {
     private String customer;
     private int orderID;
     private String product_name;
+    private float price;
+    private float total;
 
-    public Order(String product_id, String date, String time, int quantity, String customer, int orderID, String product_name){
+    public Order(String product_id, String date, String time, int quantity, String customer, int orderID, String product_name,float price,float total){
         this.product_id = product_id;
         this.date = date;
         this.time = time;
@@ -26,6 +28,8 @@ public class Order {
         this.quantity = quantity;
         this.orderID = orderID;
         this.product_name = product_name;
+        this.price = price;
+        this.total = total;
     }
     public Order(){
         
@@ -126,6 +130,34 @@ public class Order {
      */
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
+    }
+
+    /**
+     * @return the price
+     */
+    public float getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the total
+     */
+    public float getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(float total) {
+        this.total = total;
     }
     
     
