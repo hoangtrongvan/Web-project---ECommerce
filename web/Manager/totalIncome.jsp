@@ -207,7 +207,7 @@
     <body>
         <jsp:include page="../HeaderandFooter/navbar.jsp" /> 
         <jsp:include page="../HeaderandFooter/horizon-nav.jsp" /> 
-       <%--  <div id="chartdiv" class="inline" style="width: 500px; height: 600px;"></div> --%>
+        <div id="chartdiv" class="inline" style="width: 500px; height: 600px;"></div> 
 
 
         <div class="inline" style="padding:0;height:100%;">
