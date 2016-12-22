@@ -25,6 +25,10 @@ public class User {
     public User(){
         
     }
+    public User(int uid, String email){
+        this.uid = uid;
+        this.email = email;
+    }
     public User(int uid, String first_name, String last_name, String dob, String phone_number, String address, String email, int isManager, String image_url){
         this.first_name = first_name;
         this.last_name = last_name;

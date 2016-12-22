@@ -13,42 +13,57 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Account</title>
+        <title>Add Product Info</title>
         <style>
-  .btn-upload{
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-     cursor: pointer;
+   .inputText{
+                width: 412px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display : incline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+             .textarea{
+                
+                padding: 12px 20px;
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            .submit-button{
+  
+                width: 100px;
+                background-color: #1C7FFF;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border : none;
+                border-radius: 4px;
+                cursor : pointer;
+                    
+            }
+             .submit-button:hover, #myBtn:hover{
+                background-color: #0A74FE;
+            }
+            .submit-button:hover{
+                background-color: #0A74FE;
+            }
+            .title{
+    font-weight: bold;
+    font-size: 14pt;
 }
-.btn-upload input[type=file] {
-    position: absolute;
-    opacity: 0;
-    z-index: 0;
-    max-width: 100%;
-    height: 100%;
-    display: block;
-     cursor: pointer;
-}
-.btn-upload .btn{
-    padding: 8px 20px;
-    background: #337ab7;
-    border: 1px solid #2e6da4;
-    color: #fff;
-    border: 0;
-    cursor: pointer;
-}
-.btn-upload:hover .btn{
-    padding: 8px 20px;
-    background: #2e6da4;
-    color: #fff;
-    border: 0;
+.containerContent{
+    padding: 20px 40px 20px 40px;
 }
 </style>
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     </head>
     <body>
-        
+        <jsp:include page="../HeaderandFooter/navbar.jsp" /> 
+        <jsp:include page="../HeaderandFooter/horizon-nav.jsp" /> 
+        <div class="containerContent">
  <form method="POST" action="/Pineapple/productServlet?action=addProduct" enctype="multipart/form-data" id="uploadAva">
          
 <% 
@@ -60,7 +75,7 @@
                 String prodID = colorProd.getProdID();
              %>
              <input class="hidden" type="text" name="prodID" value="<%=prodID%>">
-             <p>Choose image for <%=colorName%> color</p>
+             <p class="title">Choose image for <%=colorName%> color</p>
              <input type="file" name="<%=colorName%>" id="file"  accept='image/*' required/> 
              
 <%}%>
@@ -70,23 +85,24 @@
 <% String modelAmount = (String)session.getAttribute("modelAmount");
 int amount = Integer.parseInt(modelAmount);
 for (int i = 0;i<amount;i++){ %>
-<h1>Model <%=i+1%></h1>
-<textarea rows="10" cols="50" placeholder="General Information" name="generalInformation<%=i%>"></textarea><br>
+<p class="title">Model <%=i+1%></p>
+<textarea class="textarea" rows="10" cols="50" placeholder="General Information" name="generalInformation<%=i%>"></textarea><br>
 
-<input type="text" name="price<%=i%>" placeholder="Price of model">
+<input class="inputText" type="text" name="price<%=i%>" placeholder="Price of model">
 <%}%>
 
 
 <%
      session.setAttribute("chosenColors", chosenColors);
         
-       
+       session.setMaxInactiveInterval(2*60*60);
         session.setAttribute("modelAmount", modelAmount);
         
            session.setMaxInactiveInterval(2*60*60);
         
 %>
-<input type="submit">
+<br><br>
+<input type="submit" class="submit-button">
  </form>
  
     
@@ -94,7 +110,7 @@ for (int i = 0;i<amount;i++){ %>
        
              
              
-             
+        </div>    
 
         
 

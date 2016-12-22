@@ -12,10 +12,16 @@ package Category;
 public class Category {
     private int CategoryID;
     private String Category;
+    private String compare_url;
     public Category(){
         
     }
     
+    public Category(int CategoryID, String Category, String compare_url){
+        this.CategoryID = CategoryID;
+        this.Category = Category;
+        this.compare_url = compare_url;
+    }
     public Category(String Category){
         this.Category = Category;
     }
@@ -46,6 +52,20 @@ public class Category {
      */
     public void setCategory(String Category) {
         this.Category = Category;
+    }
+
+    /**
+     * @return the compare_url
+     */
+    public String getCompare_url() {
+        return compare_url;
+    }
+
+    /**
+     * @param compare_url the compare_url to set
+     */
+    public void setCompare_url(String compare_url) {
+        this.compare_url = compare_url;
     }
     
 }

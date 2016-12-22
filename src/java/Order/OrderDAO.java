@@ -41,7 +41,7 @@ public class OrderDAO {
             while(rs.next()){
             
                 
-                    order = new Order(rs.getString("ProductID"),rs.getString("Date"),rs.getString("Time"),Integer.parseInt(rs.getString("Quantity")),rs.getString("Customer"),rs.getInt("OrderID"), rs.getString("ProductName"));
+                    order = new Order(rs.getString("ProductID"),rs.getString("Date"),rs.getString("Time"),Integer.parseInt(rs.getString("Quantity")),rs.getString("Customer"),rs.getInt("OrderID"), rs.getString("ProductName"), rs.getFloat("Price"), rs.getFloat("Total"));
                     allOrders.add(order);
                     
                     
@@ -63,6 +63,8 @@ public class OrderDAO {
      
     }
     
+    
+    
     public void updateOrderQuantity(int orderID, int newQuantity) throws SQLException{
           MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
                 "localhost", "3306", "pineapple", "root", "240596150995");
@@ -70,14 +72,22 @@ public class OrderDAO {
                  sqlConnectionManager.openConnection();
         
                  String sqlStatement ="UPDATE orderpineapple " +
-                   "SET Quantity = ? WHERE OrderID=?";
-                  
+                 "SET Quantity = ?, Total = ? WHERE OrderID=?";
+                 String sql2 ="SELECT * FROM orderpineapple WHERE OrderID = ? ";
+                 PreparedStatement preparedStmt2 = sqlConnectionManager.getConnection().prepareStatement(sql2);
+                 preparedStmt2.setInt(1, orderID);
+                 ResultSet rs2 = preparedStmt2.executeQuery();
                  
        
             try {
-                    PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+                Float price = 0.0f;
+                while(rs2.next()){
+                price = rs2.getFloat("Price");
+                }
+                PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
                           preparedStmt.setInt (1, newQuantity);
-                          preparedStmt.setInt(2, orderID);
+                          preparedStmt.setFloat(2, newQuantity*price);
+                          preparedStmt.setInt(3, orderID);
                 
                           preparedStmt.execute();
         
@@ -113,6 +123,53 @@ public class OrderDAO {
 
         sqlConnectionManager.closeConnection();
     }
+     public ArrayList<Order> generateReport(){
+          ArrayList<Products> soldProducts = new ArrayList();
+          ArrayList<Order> allOrders = new ArrayList();
+          Order order = new Order();
+          Products product = new Products();
+          /* Create MySql Connection */
+                 MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="SELECT * FROM orderpineapple";
+                 ResultSet rs = sqlConnectionManager.ExecuteQuery(sqlStatement);
+         try {
+            while(rs.next()){
+            
+                    int overlap = 0;
+                    order = new Order(rs.getString("ProductID"),rs.getString("Date"),rs.getString("Time"),Integer.parseInt(rs.getString("Quantity")),rs.getString("Customer"),rs.getInt("OrderID"), rs.getString("ProductName"), rs.getFloat("Price"), rs.getFloat("Total"));
+                    for(Order order2 : allOrders){
+                            if(order.getProduct_name().equals(order2.getProduct_name())){
+                                order2.setQuantity(order2.getQuantity()+order.getQuantity());
+                                order2.setTotal(order2.getPrice()*order2.getQuantity());
+                                overlap = 1;
+                                break;
+                            }
+                    }        
+                    if(overlap==0)
+                        allOrders.add(order);
+                    
+                    
+                    
+              
+            }
+          
+           
+           
+         }
+                 catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+                     
+
+        sqlConnectionManager.closeConnection();
+        
+        return allOrders;
+      }
 
 }    
 

@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.Part;
@@ -30,6 +31,33 @@ import javax.servlet.http.Part;
 public class ColorProdDAO {
     public ColorProdDAO(){
         
+    }
+    public void adddefaultColorProd(ColorProduct colorProduct){
+         /* Update ava of User in database */
+       MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="INSERT INTO colorproduct (ProductID, Color, colorProduct_url)" +
+                   "VALUES (?,?,?)";;
+                  
+                 
+       
+            try {
+                    PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+                          preparedStmt.setString(1, colorProduct.getProdID());
+                          preparedStmt.setString(2, colorProduct.getColor());
+                          preparedStmt.setString(3, colorProduct.getColorProd_url());
+                         
+                          
+                
+                          preparedStmt.execute();
+            }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+                 sqlConnectionManager.closeConnection();
     }
     public void addColorProd(ColorProduct colorProduct, Part filePart, String path) throws IOException{
         
@@ -152,6 +180,44 @@ public class ColorProdDAO {
         return colorProd;
       }
       
+      public ArrayList<ColorProduct> getallColorProdByProdID(String prodID) throws SQLException{
+          ArrayList<ColorProduct> allColorofProd = new ArrayList();
+         ColorProduct colorProduct = new ColorProduct();
+          /* Create MySql Connection */
+                 MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="SELECT * FROM colorproduct WHERE ProductID = ? ";
+                 PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+                 preparedStmt.setString(1, prodID);
+                 ResultSet rs = preparedStmt.executeQuery();
+                 
+         try {
+            while(rs.next()){
+            
+                
+                    colorProduct = new ColorProduct(rs.getString("ProductID"), rs.getString("Color"), rs.getString("colorProduct_url"));
+                    allColorofProd.add(colorProduct);
+                    
+                    
+              
+            }
+           
+           
+           
+         }
+                 catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+                     
+
+        sqlConnectionManager.closeConnection();
+        return allColorofProd;
+      }
+      
       public void removeColorProd(String productID){
         MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
                 "localhost", "3306", "pineapple", "root", "240596150995");
@@ -176,4 +242,6 @@ public class ColorProdDAO {
 
         sqlConnectionManager.closeConnection();
     }
+      
+   
 }

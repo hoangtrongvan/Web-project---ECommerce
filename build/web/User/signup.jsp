@@ -164,7 +164,7 @@
                    String wasRegistered = (String)session.getAttribute("wasRegistered");
                    session.removeAttribute("wasRegistered");
                 %>
-                    <form class="form-signin" action="/Pineapple/userServlet?action=signup" method="post" id="signupForm" >
+                    <form class="form-signin" action="/Pineapple/userServlet?action=signup" method="post" id="signupForm" onsubmit="return(validate());">
                         <input style = "width: 657px;" class="inputText" type="email" placeholder="name@example.com" name="email" required ><%if(wasRegistered!=null){ %><br> <span class="Error"> <% out.println(wasRegistered); %></span> <% }%><br>
                         <input style = "width: 657px;" class="inputText" type="password" placeholder="password" name ="password" required  onkeyup="CheckPasswordStrength(this.value)">
                         <span id="password_strength"></span><br>
@@ -195,6 +195,74 @@
         
         <jsp:include page="../HeaderandFooter/footer.jsp" />
 <script type="text/javascript">
+     function displayOldInfo(){
+    document.signupForm.fullName.value = getCookie("fullname") ;
+    document.signupForm.email.value = getCookie("email") ;
+    document.signupForm.userName.value = getCookie("username");
+    }
+    function setCookie(cname,cvalue,exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    
+    
+    function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                     c = c.substring(1);
+                 }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+    }
+    
+   
+    function validate()
+      {
+      
+         var fullName = document.signupForm.fullName.value;
+         if( fullName == "" )
+         {
+            alert( "Please provide your fullname" );
+            document.signupForm.fullName.focus() ;
+            return false;
+         }else setCookie("fullname",fullName,30);
+         
+         
+         var email = document.signupForm.email.value;
+         var atPosition = email.indexOf("@");
+         var dotPosition = email.lastIndexOf(".");
+         var lastPosition = email.length;
+         if(atPosition < 1 || dotPosition - atPosition < 2 || lastPosition - dotPosition < 2) 
+         {
+            alert("Please provide correct email");
+            document.signupForm.email.focus() ;
+            return false;
+         }else setCookie("email",email,30);
+         var userName = document.signupForm.userName.value;
+         if( userName == "" )
+         {
+            alert( "Please provide your username" );
+            document.signupForm.userName.focus() ;
+            return false;
+         }else setCookie("username",userName,30);
+         var password = document.signupForm.password.value;
+         var confirmPass = document.signupForm.confirm_password.value;
+         if( password!=confirmPass)
+         {
+            alert( "Confirm Password not match" );
+            document.signupForm.confirm_password.focus() ;
+            return false;
+         }
+         return (true);
+     }
     function CheckPasswordStrength(password) {
         var password_strength = document.getElementById("password_strength");
  

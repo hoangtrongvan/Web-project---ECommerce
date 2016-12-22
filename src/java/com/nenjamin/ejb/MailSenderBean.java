@@ -36,13 +36,13 @@ public class MailSenderBean {
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("neotruong2405@gmail.com", "nokialumia1520");
+                return new PasswordAuthentication("pineapplevncorp@gmail.com", "240596150995");
             }
         });
         try {
             Message message = new MimeMessage(session);
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-            message.setFrom(new InternetAddress("neotruong2405@gmail.com"));
+            message.setFrom(new InternetAddress("pineapplevncorp@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
             message.setSubject(subject);
             message.setContent(imessage,"text/html");

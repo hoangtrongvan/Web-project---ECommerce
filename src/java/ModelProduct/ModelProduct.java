@@ -35,6 +35,15 @@ public class ModelProduct {
         
         this.price = price;
     }
+    
+     public ModelProduct(int modelID, String generalInfo, float price){
+        
+        this.modelID = modelID;
+       
+        this.generalInfo = generalInfo;
+        
+        this.price = price;
+    }
 
     public ModelProduct(int modelID, String productID, String generalInfo, float price){
         

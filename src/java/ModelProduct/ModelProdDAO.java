@@ -115,4 +115,74 @@ public class ModelProdDAO {
 
         sqlConnectionManager.closeConnection();
     }
+    
+     public ArrayList<ModelProduct> getallModelProdByProdID(String prodID) throws SQLException{
+         
+                    
+                    
+              
+          ArrayList<ModelProduct> allModelofProd = new ArrayList();
+         ModelProduct modelProduct = new ModelProduct();
+          /* Create MySql Connection */
+                 MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="SELECT * FROM productmodel WHERE ProductID = ? ";
+                 PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+                 preparedStmt.setString(1, prodID);
+                 ResultSet rs = preparedStmt.executeQuery();
+                 
+         try {
+            while(rs.next()){
+            
+                
+                    modelProduct = new ModelProduct(rs.getInt("ModelID"), rs.getString("ProductID"), rs.getString("GeneralInfo"),rs.getFloat("Price"));
+                    allModelofProd.add(modelProduct);
+                    
+                    
+              
+            }
+           
+           
+           
+         }
+                 catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+                     
+
+        sqlConnectionManager.closeConnection();
+        return allModelofProd;
+      }
+     
+     public void updateModel(int ModelID, ModelProduct newModelProduct) throws SQLException{
+         
+         String newGeneralInfo = newModelProduct.getGeneralInfo();
+         float newPrice = newModelProduct.getPrice();
+         MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="UPDATE productmodel " +
+                   "SET GeneralInfo = ?, Price = ? WHERE ModelID = ? ";
+                  
+                 
+       
+           
+                    PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+                          preparedStmt.setString(1, newGeneralInfo);
+                          preparedStmt.setFloat(2, newPrice);
+                          preparedStmt.setInt(3, ModelID);
+                          
+                          
+                          
+                
+                          preparedStmt.execute();
+        
+                 sqlConnectionManager.closeConnection();
+     }
 }

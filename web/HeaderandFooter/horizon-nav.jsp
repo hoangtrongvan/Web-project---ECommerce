@@ -34,10 +34,14 @@ body {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <ul class="horizon-nav" id="wrap">
   <li><a id="prod" class="current" href="/Pineapple/Manager/Product-List.jsp">Product List</a></li>
+  <li><a id="sub" class="current" href="/Pineapple/Manager/Subcriber-List.jsp">Subcriber List</a></li>
   <li><a id="cus" class="current" href="/Pineapple/Manager/Customer-List.jsp">User List</a></li>
   <li><a id="mana" class="current" href="/Pineapple/Manager/Manager-List.jsp">Manager List</a></li>
   <li><a id="ord" class="current" href="/Pineapple/Manager/Order-List.jsp">Order List</a></li>
-  <li><a id="total"  class="current" href="#news">Total Income</a></li>
+  <li><a id="bestSel"  class="current" href="/Pineapple/Manager/bestSeller.jsp">Best Seller</a></li>
+  <li><a id="total"  class="current" href="/Pineapple/Manager/totalIncome.jsp">Total Income</a></li>
+  <li><a id="addProd"  class="current" href="/Pineapple/Manager/addProduct.jsp">Add Product</a></li>
+  
 </ul>
  <script>
     var elementPosition = $('#bla').offset();

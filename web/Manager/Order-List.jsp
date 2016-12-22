@@ -8,6 +8,7 @@
 
 <%@page import="Order.Order"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -103,6 +104,8 @@ th {
     <th>Customer</th>
     <th>ProductID</th>
     <th>Product Name</th>
+    <th>Price of Product</th>
+    <th>Order Total</th>
     <th>Date</th>
     <th>Time</th>
     <th>Quantity</th>
@@ -112,6 +115,7 @@ th {
   <% 
       OrderDAO orderDAO = new OrderDAO();
       ArrayList<Order> allOrders = orderDAO.getAllOrders();
+      Collections.reverse(allOrders);
       int i=0; 
   
   for(Order order : allOrders){ 
@@ -120,12 +124,16 @@ th {
     String date = order.getDate();
     String time = order.getTime();
     String productName = order.getProduct_name();
+    float price = order.getPrice();
+    float total = order.getTotal();
     int quantity = order.getQuantity(); 
     int orderID = order.getOrderID(); %>
     <tr>
         <td><%=customer%></td>
         <td><%=productID%></td>
         <td><%=productName%></td>
+        <td><%="$" + price%></td>
+        <td><%="$" + total%></td>
         <td><%=date%></td>
         <td><%=time%></td>
         

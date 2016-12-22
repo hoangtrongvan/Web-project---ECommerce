@@ -105,6 +105,68 @@ public class UserDAO {
         
      
     }
+       public ArrayList<User> getAllSubcribers() throws SQLException{
+        ArrayList<User> allSubcribers = new ArrayList();
+        User user = new User();
+          /* Create MySql Connection */
+                 MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+        
+                 sqlConnectionManager.openConnection();
+        
+                 String sqlStatement ="SELECT * FROM subcriber ";
+                 
+                 ResultSet rs = sqlConnectionManager.ExecuteQuery(sqlStatement);
+                 
+         try {
+            while(rs.next()){
+            
+                
+                    user = new User(rs.getInt("subID"),rs.getString("subcriber"));
+                    allSubcribers.add(user);
+                    
+                    
+              
+            }
+           
+           
+           
+         }
+                 catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+                     
+
+        sqlConnectionManager.closeConnection();
+        return allSubcribers;
+        
+     
+    }
+       
+    public void insertSubcriber(String subcriberEmail){
+           /* Update ava of User in database */
+        MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
+                "localhost", "3306", "pineapple", "root", "240596150995");
+
+        sqlConnectionManager.openConnection();
+
+        String sqlStatement = "INSERT INTO subcriber (subcriber)"
+                + "VALUES (?)";;
+
+        try {
+            PreparedStatement preparedStmt = sqlConnectionManager.getConnection().prepareStatement(sqlStatement);
+            
+            preparedStmt.setString(1, subcriberEmail);
+            
+
+            preparedStmt.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        sqlConnectionManager.closeConnection();
+    }
      public void removeUser(String uEmail){
           MySqlConnectionManager sqlConnectionManager = new MySqlConnectionManager(
                 "localhost", "3306", "pineapple", "root", "240596150995");

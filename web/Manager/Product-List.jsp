@@ -10,12 +10,13 @@
 
 <%@page import="Order.Order"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Order List</title>
+        <title>Product List</title>
         <style>
             body{
                 margin: 0;
@@ -32,10 +33,10 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #FFEAD3}
+tr:nth-child(even){background-color: #E3E3E3}
 
 th {
-    background-color: #FF5B14;
+    background-color: #1A1A1A;
     color: white;
 }
  .integer{
@@ -96,6 +97,17 @@ th {
     width : 200px;
     height :150px;
 }
+.linkto{
+                text-decoration: none;
+                color: #1A1A1A;
+                font-size: 15pt
+            }
+            .linkto:visited{
+                color: #1A1A1A;
+            }
+            .linkto:hover{
+                text-decoration: underline;
+            }
         </style>
     </head>
      <body>
@@ -119,6 +131,7 @@ th {
   <% 
       ProductDAO productDAO = new ProductDAO();
       ArrayList<Products> allProducts = productDAO.getAllProducts();
+      Collections.reverse(allProducts);
       int i=0; 
   
   for(Products product : allProducts){ 
@@ -130,7 +143,7 @@ th {
     %>
     <tr>
         
-        <td><%=productID%></td>
+        <td><a class="linkto" href="/Pineapple/Manager/editProduct.jsp?prodID=<%=productID%>"><%=productID%></a></td>
         <td>
         <img class="img_ava" src="<%=ava%>" alt="<%=productName%>" >
         </td>

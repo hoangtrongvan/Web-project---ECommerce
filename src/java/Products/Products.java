@@ -5,6 +5,10 @@
  */
 package Products;
 
+import ColorProduct.ColorProduct;
+import ModelProduct.ModelProduct;
+import java.util.ArrayList;
+
 /**
  *
  * @author nhatduthan2405
@@ -26,6 +30,9 @@ public class Products {
     private String small_icon_url;
     private String caption;
     private String description;
+    private ArrayList<ColorProduct> allColorsofProduct;
+    private ArrayList<ModelProduct> allModelsofProduct;
+    private double total;
 
     /**
      * @return the name
@@ -33,6 +40,7 @@ public class Products {
     public Products(){
         
     }
+   
     public Products(String name, String caption, String large_img_url, String productID, String small_icon_url){
         this.name = name;
         this.caption = caption;
@@ -48,6 +56,14 @@ public class Products {
         this.productID = productID;
         this.description = description;
         
+    }
+    
+    public Products(String productID, String name, double price, int amount, double total){
+        this.productID = productID;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.total = total;
     }
     public Products(String productID, String ava_url, String Category, String name){
         this.productID = productID;
@@ -79,6 +95,19 @@ public class Products {
         this.small_icon_url = small_icon_url;
         this.caption = Caption;
     }
+    
+     public Products(String productID, String name, String Brief_Desc, String desc1, String desc2, String Caption){
+        this.productID = productID;
+        this.name = name;
+        
+        this.Brief_Desc = Brief_Desc;
+        this.desc1 = desc1;
+        this.desc2 = desc2;
+        
+        
+        this.caption = Caption;
+    }
+    
     public String getName() {
         return name;
     }
