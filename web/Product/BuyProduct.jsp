@@ -4,6 +4,12 @@
     Author     : nhatduthan2405
 --%>
 
+<%@page import="Color.ColorDAO"%>
+<%@page import="ModelProduct.ModelProduct"%>
+<%@page import="ColorProduct.ColorProduct"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Products.Products"%>
+<%@page import="Products.ProductDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -99,7 +105,7 @@
                 overflow: hidden;
                 margin: 5px 4px 10px;
                 word-wrap: break-word;
-                text-align: center;
+                text-align: left;
                 width: 85%;
                 cursor: pointer;
             }
@@ -112,7 +118,7 @@
                 overflow: hidden;
                 margin: 5px 4px 10px;
                 word-wrap: break-word;
-                text-align: center;
+                text-align: left;
                 width: 85%;
                 cursor: pointer;
             }
@@ -195,7 +201,7 @@
     bottom: 12px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    opacity: 0;
+    opacity: 1;
     
     
     
@@ -204,79 +210,78 @@
 fieldset{
     border: none;
 }
+.priceTag{
+    font-size : 15pt;
+    
+}
         </style>
     </head>
     <body>
+        <% String prodID = request.getParameter("productID"); 
+           
+           ProductDAO productDAO = new ProductDAO();
+           Products product = productDAO.getOneProduct(prodID);
+        %>
          <jsp:include page="../HeaderandFooter/navbar.jsp" />
          <div class="bottom-addtoCart" id="wrap">
-            <p class="product-name-bottom">MacBook Pro</p>
-            <div style="margin-right:40px; float: right;" ><span style="font-size:15pt;margin-right: 10px;">$629.00</span><input class="submit-button" type="submit" value="Add to cart" form="addtoCartForm"></div>
+            <p class="product-name-bottom"><%=product.getName()%></p>
+            <div style="margin-right:40px; float: right;" ><input class="submit-button" type="submit" value="Add to cart" form="addtoCartForm"></div>
             </div>
         <div class="buy-product">
-         
+         <% ArrayList<ColorProduct> allColorOfProduct = productDAO.getAllColorOfProduct(prodID);
+                    for(ColorProduct colorProd : allColorOfProduct ){
+          %>
         <div class="img-product fade" >
-            <img src="../images/mac/macbook-pro-silver.jfif">
+            <img src="<%=colorProd.getColorProd_url()%>">
         </div>
-            <div class="img-product fade"  >
-            <img src="../images/mac/macbook-pro-white.jfif">
-        </div>
+           <%}%>
         
         <div class="product-spec">
-            <h2>Customize your 13-inch MacBook Pro</h2>
             
-            <ul class="spec">
-                <li>2.0GHz dual-core Intel Core i5 processor, Turbo Boost up to 3.1GHz
-                <li>8GB 1866MHz memory
-                <li>256GB PCIe-based SSD
-                <li>Backlit Keyboard (English) & User's Guide
-                <li>Two Thunderbolt 3 ports
-                    
-            </ul>
-            <hr class="style-three">
-            <p class="ptitle">Choose a color</p>
+            <p class="ptitle">Choose your Color</p>
             
             <form action="/Pineapple/productServlet?action=addtoCart" method="post" id="addtoCartForm">
-                <input type="text" value ="Pacbook Pro" name="product_name" style="visibility: hidden;">
+                <input type="text" value ="<%=product.getProductID() %>" name="productID" style="visibility: hidden;">
                   <fieldset id="color">
-            <div class="color-content" onclick="currentColor(1)">
-                <input class="form-choice" type="radio" name="color" value="Silver" checked>
-                <img src="../images/colors/finish-silver-2x.png"><br>
-                <span>Silver</span>
+                  <% 
+                        
+                        int i = 1;
+                        for(ColorProduct colorProd : allColorOfProduct ){
+                            
+                            ColorDAO colorDAO = new ColorDAO();
+                        
+                  %>
+            <div class="color-content" onclick="currentColor(<%=i%>)">
+                <input id="selectColor" class="form-choice" type="radio" name="color" value="<%=colorProd.getColor()%>" >
+                <img src="<%=colorDAO.getURLColorByName(colorProd.getColor())%>"><br>
+                <span><%=colorProd.getColor()%></span>
             </div>
-            <div class="color-content" onclick="currentColor(2)">
-                <input class="form-choice" type="radio" name="color" value="White">
-                <img src="../images/colors/white.jfif"><br>
-                <span>White</span>
-            </div>
-                      </fieldset>
+           
+            <% i++;}%>
+                 </fieldset>
             <hr class="style-three">
-            <p class="ptitle">Processor</p>
-                <fieldset id="Processor">
-            <div id="processor"  class="list-content" onclick="changeBorder(1)" >
-                <input class="form-choice" type="radio" name="Processor" value="2.9GHz dual-core Intel Core i5 processor, Turbo Boost up to 3.3GHz" checked>
-                <span>2.9GHz dual-core Intel Core i5 processor, Turbo Boost up to 3.3GHz</span>
+            <p class="ptitle">Choose your Model</p>
+                <fieldset id="Model">
+                    <% 
+                        ArrayList<ModelProduct> allModelOfProduct = productDAO.getAllModelOfProduct(prodID);
+                        int j = 1;
+                        for(ModelProduct modelProd : allModelOfProduct ){
+                            String generalInfo = modelProd.getGeneralInfo();
+                            String[] generalInfoArray = productDAO.displayGeneralInfo(generalInfo);
+                        
+                  %>
+            <div id="Model"  class="list-content" onclick="changeBorder(<%=j%>)" >
+                <input id="selectModel" class="form-choice" type="radio" name="Model" value="<%=modelProd.getModelID()%>" >
+                <span><% for(String eachInfo : generalInfoArray ){
+                    out.print(eachInfo + "<br><br>");
+                }%></span><br><br>
+                
+                <span class="priceTag"><b><%= "$" + modelProd.getPrice()%></b></span>
             </div>
-            <div id="processor" class="list-content" onclick="changeBorder(2)">
-                <input class="form-choice" type="radio" name="Processor" value="3.1GHz dual-core Intel Core i5 processor, Turbo Boost up to 3.5GHz">
-                <span>3.1GHz dual-core Intel Core i5 processor, Turbo Boost up to 3.5GHz</span>
-            </div>
-             <div id="processor" class="list-content" onclick="changeBorder(3)">
-                <input class="form-choice" type="radio" name="Processor" value="3.3GHz dual-core Intel Core i7 processor, Turbo Boost up to 3.6GHz">
-                <span>3.3GHz dual-core Intel Core i7 processor, Turbo Boost up to 3.6GHz</span>
-            </div> 
+            <%j++;}%>
                </fieldset>
                 <hr class="style-three">
-            <p class="ptitle">Memory</p>
-            <fieldset id="Memory">
-            <div class="list-content2" onclick="changeBorder2(1)">
-                <input class="form-choice" type="radio" name="Memory" value="8GB 2133MHz memory" checked>
-                <span>8GB 2133MHz memory</span>
-            </div>
-            <div class="list-content2" onclick="changeBorder2(2)">
-                <input class="form-choice" type="radio" name="Memory" value="16GB 2133MHz memory">
-                <span>16GB 2133MHz memory</span>
-            </div>
-          </fieldset>
+            
             </form>
                 
            
@@ -286,6 +291,9 @@ fieldset{
           <jsp:include page="../HeaderandFooter/footer.jsp" />
         
             <script>
+               changeBorder(1);
+                document.getElementById("selectColor").checked = true;
+                document.getElementById("selectModel").checked = true;
                 var slideIndex = 1;
 showSlides(slideIndex);
 function currentColor(n) {
@@ -322,7 +330,7 @@ function changeBorder(n) {
 function changeBorder2(n) {
   var i;
   
-  var dots = document.getElementsByClassName("list-content2");
+  var dots = document.getElementsByClassName("color-content");
   
   for (i = 0; i < dots.length; i++) {
       dots[i].className = dots[i].className.replace(" active", "");

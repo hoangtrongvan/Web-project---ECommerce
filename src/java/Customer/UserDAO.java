@@ -222,7 +222,7 @@ public class UserDAO {
             String fileExtension = getFileExtension(fileName);
            
             int loginUserID = loginUser.getUid();
-            String newFileName = Integer.toString(loginUserID) + "." + fileExtension;
+            String newFileName = Integer.toString(loginUserID) + "." + fileExtension.toLowerCase();
 
             OutputStream out = null;
             InputStream filecontent = null;
@@ -244,7 +244,7 @@ public class UserDAO {
                 new Object[]{fileName, path});
         
        
-        imgPath = "../avatars" + "/" +  newFileName.toLowerCase();
+        imgPath = "../avatars" + "/" +  newFileName;
        
     } catch (FileNotFoundException fne) {
       

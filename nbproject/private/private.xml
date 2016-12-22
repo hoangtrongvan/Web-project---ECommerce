@@ -2,6 +2,23 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/Product/BuyProduct.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/HeaderandFooter/navbar.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Customer/userServlet.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/Product/Category.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Products/ProductDAO.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/ModelProduct/ModelProdDAO.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/ColorProduct/ColorProdDAO.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/Manager/Product-List.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Order/OrderDAO.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/WEB-INF/web.xml</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Customer/UserDAO.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/Manager/addProduct.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Products/Products.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Order/orderServlet.java</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/web/Manager/Order-List.jsp</file>
+            <file>file:/E:/Web/Github/Web-project---ECommerce/src/java/Products/productServlet.java</file>
+        </group>
     </open-files>
 </project-private>
