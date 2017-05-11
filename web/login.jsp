@@ -227,13 +227,13 @@ border: 1px solid #ccc;
                             
                     </ul><br>
                     
-                    <a class="Sign-up" href="signup.jsp">Don't have an Pineapple ID? Create one now.</a>
+                    <a class="Sign-up" href="signup.jsp">Create one account rightnow.</a>
                 </div>
             </div>
             <div class="login-footer">
                 <hr class="style-two">
                  <input class="cancel" type="submit" value="Cancel">
-                 <p style="float:right;">Questions? Just ask. 1-800-MY-PINEAPPLE</p>
+                 <p style="float:right;">Questions? Call us 1-800-MY-PINEAPPLE</p>
             </div>
         </div>
         </div>
@@ -244,7 +244,7 @@ border: 1px solid #ccc;
         <div class="recover-content">
             <div class="recover-header">
                 <span class="close">&times</span>
-                <h2>Please input your email</h2>
+                <h2>Please fill your email</h2>
                 
                 <hr class="style-two">
             </div>
